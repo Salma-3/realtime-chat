@@ -1,8 +1,6 @@
 import path from 'path';
-import dotenv from 'dotenv';
-dotenv.config();
-
-import express from'express';
+import { ENV } from './lib/env.js';
+import express from 'express';
 
 
 import authRoutes from './routes/auth.route.js';
@@ -14,7 +12,7 @@ const app = express();
 
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+const PORT = ENV.PORT || 3000;;
 
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
