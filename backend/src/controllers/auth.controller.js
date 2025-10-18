@@ -56,10 +56,12 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials'});
         }
 
-        const passwordMatch = await bcrypt.verify(password, user.password);
+        const passwordMatch = await bcrypt.compare(password, user.password);
         if(!passwordMatch) {
             return res.status(400).json({ message: 'Invalid Credentials' });
         }
+
+        console.log(user)
          
         generateToken(user.id, res)
 
@@ -67,7 +69,16 @@ export const login = async (req, res) => {
 
         return res.status(200).json(user)
     } catch (error) {
-        console.log('Error in signup controller:', error.message)
+        console.log('Error in login controller:', error.message)
         return res.status(500).json({ message: error.message })
     }
+}
+
+export const logout = (_, res) => {
+   try {
+     res.cookie('jwt', '', {maxAge: 0})
+     return res.status(200).json({ message: 'Logged out successfully' })
+   } catch (error) {
+    console.error(error)
+   }
 }
