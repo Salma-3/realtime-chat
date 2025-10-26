@@ -42,7 +42,7 @@ export const useChatStore = create((set, get) => ({
             console.error('error in getMyChatPartners', error);
             toast.error(error.response.data.message);
         } finally {
-            set({ isUserLoading: false })
+            set({ isUsersLoading: false })
         }
     }
 }))
