@@ -3,6 +3,7 @@ import { ENV } from './lib/env.js';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 
 import authRoutes from './routes/auth.route.js';
 import messageRoutes from './routes/message.route.js';
@@ -18,6 +19,10 @@ const limiter = rateLimit({
 });
 
 app.use(express.json());
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+}));
 app.use(cookieParser());
 
 const PORT = ENV.PORT || 3000;
