@@ -8,9 +8,8 @@ import cors from 'cors';
 import authRoutes from './routes/auth.route.js';
 import messageRoutes from './routes/message.route.js';
 import { connectDB } from './lib/db.js';
+import { app, server } from './lib/socket.js';
 
-
-const app = express();
 
 const limiter = rateLimit({
     windowMs: 1000, // 1 minute
@@ -43,11 +42,8 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 if(process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log('Server running on port', PORT)
     connectDB()
   });
 }
-
-
-export default app;
